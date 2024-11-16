@@ -1,0 +1,155 @@
+@use 'variables' as *;
+@use 'mixins';
+@use 'functions';
+@use 'sass:color'; // Importar el módulo de color
+@use 'sass:map';
+
+@import "npm:@fortawesome/fontawesome-free/css/all.css";
+
+@import './variables'; // Importa las variables personalizadas de Bootstrap
+
+@import "node_modules/bootstrap/scss/bootstrap";
+
+
+
+/* Estilos personalizados para la galería */
+.bgallery {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: hwb(200deg 100% 0%);
+}
+
+/* Estilos para los elementos de la galería con queries de contenedor */
+.bootstrap-container section#gallery {
+    padding: 20px;
+    background: color(display-p3 0.9 0.1 0.1);
+}
+
+section .gallery-grid{
+    display:flex;
+    justify-content: center;
+}
+
+@container (min-width: 600px) {
+    .bootstrap-container section#gallery {
+        padding: 40px;
+    }
+}
+
+/* Centra las imágenes en su contenedor */
+.bootstrap-container .gallery-item {
+    display: flex; /* Cambia a flexbox */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    overflow: hidden;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.bootstrap-container .gallery-item img {
+    width: 100%; /* Mantiene el ancho de la imagen */
+    height: auto;
+    display: block;
+    border-radius: 10px;
+}
+
+.container-fluid {
+    background-color: $headerColor;
+}
+
+.nav-item a {
+    color: $white !important;
+    font-size: 1.2em;
+}
+
+/* Alinea los enlaces del menú a la derecha */
+.navbar-nav {
+    margin-left: auto; /* Empuja los elementos del menú a la derecha */
+}
+
+/* Cambia el color de los enlaces a rojo al pasar el cursor */
+.navbar-nav .nav-link:hover {
+    color: red !important; /* Color rojo al pasar el ratón */
+}
+
+/* Estilo para el botón hamburguesa */
+.navbar-toggler {
+    background-color: #007bff; /* Color de fondo del botón hamburguesa */
+    border: none; /* Sin borde */
+}
+
+.navbar-toggler:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el ratón */
+}
+
+.bootstrap-container .gallery-item:hover {
+    transform: scale(1.05);
+}
+
+/* Estilos que dependen del tamaño del contenedor principal */
+@container (min-width: 768px) {
+    .bootstrap-container .gallery-item {
+        border: 2px solid hwb(200deg 100% 10%);
+    }
+}
+
+@container (min-width: 1200px) {
+    .bootstrap-container .gallery-item {
+        border: 3px solid hwb(200deg 100% 15%);
+    }
+}
+
+/* Ajustes de los formularios */
+.bootstrap-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.bootstrap-container form label {
+    margin-top: 10px;
+}
+
+.bootstrap-container form input,
+.bootstrap-container form textarea {
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Media queries adicionales para compatibilidad en navegadores sin container queries */
+@media (max-width: 768px) {
+    .bootstrap-container .gallery-item {
+        width: 95%;
+    }
+}
+
+/* SCSS para el footer */
+
+.align-items-center {
+    background-color: $footerColor!important; /* Fondo del footer */
+    padding: 1.5rem 0; /* Espaciado para el footer */
+   
+
+    .footer__nav__item a {
+        color: white; /* Color inicial de los enlaces */
+        text-decoration: none;
+
+        &:hover {
+            color: red; /* Color rojo al pasar el cursor */
+        }
+    }
+
+    .footer__social a {
+        margin: 0 0.5rem; /* Espaciado entre iconos */
+
+         /* Cambiar color del icono al pasar el cursor */
+         &:hover img {
+            filter: brightness(0.8);
+        }
+    }
+    
+   
+}
+

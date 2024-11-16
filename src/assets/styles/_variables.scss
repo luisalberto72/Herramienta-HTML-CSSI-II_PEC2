@@ -1,0 +1,60 @@
+@use "sass:color";
+
+// Colores para el sitio del Caminito del Rey
+
+$fontFamilySansSerif: arial, sans-serif;
+
+$headerColor: #1c1447; 
+
+$primaryColor: #F00;
+
+$footerColor: #282828;
+
+$enlaceColor: #fe320f;
+
+$backgroundColor: #f5f5f5; // Fondo suave
+
+$black: #333; // Un negro suave para no ser tan agresivo
+
+$white: #fff; // Blanco puro
+
+$theme-colors: (
+  "primary": $footerColor,
+  "danger": $enlaceColor
+);
+
+
+$primary: #007bff !default; // Azul
+$secondary: #6c757d !default; // Gris
+$success: #28a745 !default; // Verde
+$danger: #dc3545 !default; // Rojo
+$warning: #ffc107 !default; // Amarillo
+$info: #17a2b8 !default; // Cyan
+$light: #f8f9fa !default; // Gris claro
+$dark: #343a40 !default; // Negro
+
+
+$boxShadow: 0 2px 10px color.scale(#000, $alpha: -90%); // Sombra suave
+
+$borderRadius: 8px; // Bordes redondeados
+
+// Breakpoints
+
+$mqMinWidth: 420px; // Cambiado para seguir el patrón
+
+
+
+// Espaciados
+
+$paddingStandard: 20px;
+
+$marginStandard: 20px;
+
+
+// Tamaños de fuente
+
+$baseFontSize: 16px;
+
+$headingFontSize: 2rem; // Para títulos
+
+$subheadingFontSize: 1.5rem;

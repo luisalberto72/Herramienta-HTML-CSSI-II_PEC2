@@ -1,0 +1,690 @@
+@use 'variables' as *;
+@use 'mixins';
+@use 'functions';
+@use 'sass:color'; // Importar el módulo de color
+@use 'sass:map';
+
+@import "npm:@fortawesome/fontawesome-free/css/all.css";
+
+@import './variables'; // Importa las variables personalizadas de Bootstrap
+
+
+
+:root {
+  --primary-color: #{$primaryColor};   // Definir variable CSS usando la definida en Sass
+  --white-color: #{$white};
+  --dark-primary-color: #{$headerColor}; // Un tono más oscuro
+}
+
+
+/* Definimos las capas */
+@layer reset {
+    /* Estructura básica y reseteo */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: $fontFamilySansSerif;
+        background-color: $white;
+        color: $black;
+    }
+}
+
+@layer base {
+    h1, h2, h3, h4, h5, h6 {
+        margin-bottom: 0.5em;
+        font-weight: bold;
+    }
+
+    p {
+        margin-bottom: 1em; /* Espaciado entre párrafos */
+        line-height: 1.5; /* Mejora la legibilidad */
+    }
+
+    a {
+        color: inherit; /* Hereda el color de su padre */
+        text-decoration: none; /* Resetea el subrayado en los enlaces */
+    }
+}
+
+@layer layout {
+    /* Contenedor principal */
+    .container {
+        container-type: inline-size; /* Definimos el contenedor para consultas */
+        padding: 1em;
+
+        /* Container Queries */
+        @container (min-width: 600px) {
+            .header {
+                padding: 2em;
+            }
+
+            .main {
+                flex-direction: row;
+            }
+
+            .footer {
+                flex-direction: row; /* Cambiar la disposición en el footer */
+            }
+        }
+    }
+
+    /* Estilo para el header */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1em 2em;
+        background-color: $headerColor;
+        color: $white;
+
+        @media (max-width: 600px) {
+            flex-direction: column;
+            padding: 1em;
+            overflow: hidden; /* Evitar scroll */
+        }
+    }
+
+    .header__logo {
+        img {
+            max-height: 150px;
+        }
+    }
+
+    /* Estilo para el contenido principal */
+
+        /* Diseño con Grid */
+@supports (display: grid) {
+    .main {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 1em;
+    }
+
+    .main__content {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Fallback para navegadores sin Grid */
+@supports not (display: grid) {
+    .main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .main__content {
+        text-align: center;
+    }
+}
+
+
+    .main__content {
+        text-align: center;
+        padding: 2em;
+        background-color: $headerColor;
+
+        @media (max-width: 600px) {
+            padding: 1em;
+        }
+    }
+
+    .main__image {
+        max-width: 60%; /* Ajustar imagen al 60% del contenedor */
+        height: auto;
+        object-fit: cover;
+        margin-bottom: 1em;
+        border-radius: 5px;
+    }
+
+    /* Títulos ajustados para ser responsivos */
+    .main__title {
+        font-size: calc(1.5em + 2vw); /* Tamaño flexible */
+        color: $primaryColor;
+        margin-bottom: 1em;
+
+        @media (max-width: 600px) {
+            font-size: calc(1.2em + 2vw);
+        }
+    }
+
+    .header__nav {
+      ul {
+          list-style-type: none;
+          display: flex; /* Mantenemos la disposición flex */
+          gap: 2em;
+          margin-right: 30px;
+
+          @media (max-width: 600px) {
+              flex-direction: row; /* Aseguramos que estén en fila en móviles */
+              gap: 1em; /* Espaciado entre elementos */
+              margin-right: 0; /* Sin margen a la derecha */
+              font-size: 0.9em; /* Tamaño de fuente más pequeño en móviles */
+              overflow: auto; /* Asegurarnos de que no se corte */
+          }
+      }
+
+      &__item a {
+          text-decoration: none;
+          color: $white;
+          font-weight: bold;
+          text-transform: uppercase;
+
+          &:hover { 
+              color: $primaryColor;
+          }
+      }
+    }
+
+    .main__links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5em;
+        flex-wrap: wrap;
+
+        a {
+            text-decoration: none;
+            padding: 0.5em 1em;
+            background-color: $footerColor;
+            color: $white;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 0.5em;
+
+            &:hover {
+                background-color: map.get($theme-colors, "danger");
+            }
+        }
+
+        @media (max-width: 600px) {
+            justify-content: center;
+            gap: 1em;
+        }
+    }
+
+
+
+
+    /* Footer Styling */
+    .footer {
+        background-color: $footerColor;
+        color: $white;
+        padding: 2em 1em;
+        text-align: center;
+
+        @media (max-width: 600px) {
+            padding: 1em;
+        }
+    }
+
+    .footer__contact {
+        margin-bottom: 2em;
+
+        h4 {
+            font-size: 1em;
+            margin-bottom: 0.5em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        p {
+            margin: 0.5em 0;
+            font-size: 1em;
+
+            .footer__contact-icon {
+                font-size: 1.2em;
+                margin-right: 0.5em;
+                color: $enlaceColor;
+            }
+        }
+    }
+
+    .footer__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        align-items: center;
+        gap: 1em;
+        padding-top: 1em;
+
+        @media (max-width: 600px) {
+            grid-template-columns: 1fr; /* Una columna en móviles */
+        }
+    }
+
+    .footer__logo {
+        justify-self: start; /* Alinear logo a la izquierda */
+
+        img {
+            max-height: 80px; /* Ajustar la altura del logo */
+        }
+
+        @media (max-width: 600px) {
+            justify-self: center; /* Alinear logo al centro */
+            margin-bottom: 1em; /* Espacio en la parte inferior en móviles */
+        }
+    }
+
+    .footer__nav {
+        text-align: center;
+
+        ul {
+            list-style: none;
+            padding: 0;
+            display: flex; /* Disposición flex para enlaces */
+            justify-content: center; /* Centrar enlaces */
+            gap: 1em; /* Espacio entre enlaces */
+
+            @media (max-width: 600px) {
+                flex-wrap: wrap; /* Ajustar enlaces en varias líneas si es necesario */
+                font-size: 0.9em; /* Ajustar tamaño de fuente en móviles */
+            }
+        }
+
+        &__item {
+            display: inline;
+
+            @media (max-width: 600px) {
+                margin-bottom: 10px; /* Espacio entre enlaces si se envuelven */
+            }
+        }
+
+        &__item a { 
+            color: $white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: responsive-text(1.1);
+
+            &:hover {
+                color: $enlaceColor;
+            }
+        }
+    }
+
+    .footer__social {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 20px;
+
+        a {
+            img {
+                width: 24px;
+                margin-left: 10px;
+
+                &:hover {
+                    filter: brightness(0.8);
+                }
+            }
+        }
+
+        @media (max-width: 600px) {
+            justify-content: center; /* Centrar iconos en contenedores pequeños */
+            margin-right: 0; /* Eliminar margen en contenedores pequeños */
+        }
+    }
+}
+
+@layer components {
+    /* Puedes añadir aquí otros componentes reutilizables */
+
+  .btn {
+      background-color:  var(--primary-color); // Usa tu color personalizado
+      color: var(--white-color);
+      padding: 0.5em 1em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+
+    &:hover {
+            background-color: custom-hover-color($primaryColor, 10%) /* Un tono más oscuro al pasar el mouse */
+            box-shadow(0 4px 12px rgb(0 0 0 / 20%));
+        }
+    }
+}
+
+@layer utilities {
+    .text-center {
+        text-align: center;
+    }
+
+    .mb-1 {
+        margin-bottom: 1em;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    .hidden {
+        display: none;
+    }
+}
+
+/* Definición de estilos página speaker */
+@layer base {
+    /* Estilos básicos de la sección de speakers */
+    .speakers {
+        padding: 2em;
+        background-color: #e6e6e6;
+    }
+
+    .speakers__title {
+        text-align: center;
+        font-size: 2.5em;
+        color: #282828;
+        margin-bottom: 2em;
+    }
+
+    /* Contenedor principal */
+    .speakers__grid {
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
+    }
+
+    /* Estilo para cada fila de tarjetas */
+    .speakers__row {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center; /* Centra las tarjetas en la fila */
+    }
+}
+
+/* Definición de estilos de los componentes */
+@layer components {
+    /* Tarjetas de los speakers */
+    .speakers__card {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgb(0 0 0 / 10%); 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.3s;
+        flex: 1 1 calc(33% - 20px); /* Tres columnas en escritorio */
+        max-width: 300px;
+    }
+
+    .speakers__card:hover {
+        transform: scale(1.05);
+    }
+
+    /* Imagen de perfil */
+    .speakers__image {
+        width: 100%;
+        max-width: 150px;
+        height: auto;
+        border-radius: 50%;
+        margin-bottom: 1em;
+    }
+
+    /* Contenido de la tarjeta */
+    .speakers__content {
+        text-align: center;
+    }
+
+    .speakers__name {
+        font-size:responsive-text(1.5);
+        margin-bottom: 0.5em;
+    }
+
+    .speakers__bio {
+        font-size: 1em;
+        line-height: 1.5;
+    }
+
+    /* Botón reutilizable */
+    .btn {
+        background-color: var(--primary-color); /* Usa tu color personalizado */
+        color: var(--white-color);
+        padding: 0.5em 1em;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: var(--dark-primary-color); 
+        
+ }
+}
+
+/* Definición de estilos de utilidades */
+@layer utilities {
+    .text-center {
+        text-align: center;
+    }
+
+    .mb-1 {
+        margin-bottom: 1em;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    .hidden {
+        display: none;
+    }
+}
+
+/* Definición de estilos de media queries */
+@layer media {
+    /* Media Query para dispositivos móviles */
+    @media (max-width: 768px) {
+        .speakers__card {
+            flex: 1 1 100%; /* Una columna en móviles */
+        }
+    }
+
+    /* Media Query para tablets */
+    @container (min-width: 769px) and (max-width: 1024px) {
+        .speakers__card {
+            flex: 1 1 calc(50% - 20px); /* Dos columnas en tablets */
+        }
+    }
+
+    /* Media Query para pantallas grandes */
+    @container (min-width: 1025px) {
+        .speakers__card {
+            flex: 1 1 calc(33% - 20px); /* Tres columnas en escritorio */
+        }
+    }
+}
+
+
+
+
+/* Página Blog */
+
+/* Estilo para el contenedor de imagen y título */
+.contenedor-imagen-titulo {
+    background-color: #e0f7fa;
+    padding: 2em 0;
+    text-align: center;
+    width: 100%;
+}
+
+/* Estilo para el artículo */
+main.blog {
+    padding: 0; /* Eliminar el padding para evitar separación */
+    background-color: #fff;
+}
+
+/* Ajuste de la línea horizontal */
+.linea-horizontal {
+    width: 50%;
+    border-top: 2px solid #333;
+    margin: 2em auto;
+}
+
+.frase-titulo{
+font-size: 4em;
+text-align: center;
+color:$headerColor;
+}
+
+.autor{
+    color:$headerColor;
+}
+
+/* Artículo con columnas */
+.articulo-con-columnas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2em;
+}
+
+/* Columnas */
+.columnas {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2em;
+    width: 100%;
+}
+
+/* Columna estilo */
+.columna {
+    text-align: center;
+}
+
+.texto-grande {
+    font-size: 1.5em;
+    line-height: 1.5;
+    margin: 1em 0;
+    text-align: justify;
+}
+
+.texto-pequeno {
+    font-size: 1.2em;
+    line-height: 1.2;
+    margin: 1em 0;
+    text-align: justify;
+}
+
+/* Estilo para las imágenes */
+.img-responsive {
+    max-width: 100%;
+    height: auto;
+}
+
+.articulo-con-texto {
+    margin-top: 2em;
+}
+
+.ultimoac {
+    margin-bottom: 2em;
+}
+
+.articulo-con-texto h2 {
+    font-size: 1.5em;
+    line-height: 1.5;
+    margin-bottom: 1em;
+    text-align: justify;
+}
+
+/* Columna ocupa las columnas 2 y 3 */
+.columna-2-3 {
+    grid-column: 2 / span 2;
+    text-align: justify;
+}
+
+/* Estilo para listas */
+.columna-lista {
+    grid-column: 2 / span 2; /* Ocupa las columnas 2 y 3 */
+    padding: 0 1em; /* Agregar padding para separarlo del borde */
+    text-align: justify;
+}
+
+.articulo-con-lista {
+    margin-top: 2em;
+}
+
+.articulo-con-lista ol {
+    counter-reset: item;
+    list-style: none;
+    padding-left: 0;
+}
+
+.articulo-con-lista li {
+    position: relative;
+    margin-bottom: 1.5em;
+    padding-left: 3em;
+    text-align: left;
+}
+
+/* Numeración de la lista */
+.articulo-con-lista li::before {
+    content: counter(item);
+    counter-increment: item;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+    border-radius: 50%;
+    background-color: white;
+    border: 2px solid #00bcd4;
+    color: #00bcd4;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.articulo-con-lista li p {
+    margin: 0.5em 0;
+    line-height: 1.5em;
+}
+
+/* Contenedor azul */
+.contenedor-azul {
+    background-color: #007BFF; /* Color azul */
+    width: 80%; /* Ocupa el 80% de la pantalla */
+    margin: 2em auto; /* Centrado en la página con margen superior e inferior */
+    padding: 1em; /* Espaciado interno */
+    text-align: center; /* Centra el contenido dentro del contenedor */
+    border-radius: 8px; /* Bordes redondeados (opcional) */
+}
+
+/* Imagen centrada */
+.imagen-centrada {
+    max-width: 80%; /* Imagen ocupa hasta el 80% del contenedor */
+    height: auto; /* Mantiene la relación de aspecto */
+}
+
+/* Consultas de contenedor */
+@container (min-width: 500px) {
+    .columnas {
+        grid-template-columns: repeat(3, 1fr); /* Cambia a 3 columnas en pantallas medianas */
+    }
+}
+
+@container (min-width: 800px) {
+    .columnas {
+        grid-template-columns: repeat(4, 1fr); /* Mantiene 4 columnas en pantallas grandes */
+    }
+}
+
+/* Pseudoclase funcional :has() */
+.articulo-con-lista:has(ol) {
+    border: 1px solid #fff; /* Agrega borde si contiene una lista ordenada */
+    padding: 1em; /* Espaciado interno */
+    background-color: #fff; /* Color de fondo claro */
+}
+
+/* Pseudoclases funcionales :is() y :where() */
+.columnas:has(.columna-lista) {
+    background-color: #fff; /* Cambia el color de fondo si hay lista */
+}
+
+.columna:is(.texto-grande, .texto-pequeno) {
+    border: 1px solid #fff; /* Bordes para columnas de texto grandes o pequeños */
+}
+
