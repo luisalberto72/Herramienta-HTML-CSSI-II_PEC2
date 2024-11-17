@@ -688,3 +688,36 @@ color:$headerColor;
     border: 1px solid #fff; /* Bordes para columnas de texto grandes o pequeños */
 }
 
+/* Ajustes para pantallas pequeñas (768px o menos) */
+@media (max-width: 768px) {
+    /* Aseguramos que las imágenes secundarias se vean en una sola columna y se adapten al ancho de la pantalla */
+    .imagen-secundaria {
+        display: block; /* Las imágenes se muestran como bloques */
+        width: 100%; /* Ocupan el 100% del ancho disponible */
+        height: auto; /* Mantienen la relación de aspecto */
+        margin-bottom: 1em; /* Espacio debajo de cada imagen */
+    }
+
+    .texto-grande,.texto-pequeno{
+        padding:2em;
+    }
+
+    /* Aseguramos que el artículo con imágenes se acomode bien */
+    .articulo-con-texto {
+        display: block; /* Asegura que los artículos se muestren en bloque */
+        margin-top: 2em;
+        margin-left: 2em;
+        margin-right: 2em;
+    }
+
+    /* En caso de que las imágenes estén dentro de un contenedor, asegurar que el contenedor también se acomode */
+    .columnas {
+        display: block; /* Cambiar a bloque en lugar de grid */
+    }
+    
+    /* Si hay más de una columna, asegurarse de que cada columna se apile verticalmente */
+    .columna {
+        width: 100%; /* Cada columna ocupa el 100% de la anchura en pantallas pequeñas */
+        margin-bottom: 2em; /* Espacio entre columnas */
+    }
+}

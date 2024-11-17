@@ -25,6 +25,7 @@
     "color-hex-length": "short", 
     "alpha-value-notation": "percentage", 
     "max-nesting-depth": 3,
-    "no-descending-specificity": null  
+    "no-descending-specificity": null,
+    "scss/load-partial-extension": null  
   }
 }
